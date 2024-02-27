@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: demo-rhdh-collection
+  description: A collection of Golden path templates for Red Hat Developer Hub
+spec:
+  type: url
+  targets:
+  - templates/go-rest-backend

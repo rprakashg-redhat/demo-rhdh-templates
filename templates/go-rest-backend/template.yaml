@@ -31,10 +31,10 @@ spec:
             type: string
             ui:field: EntityPicker
             ui:options:
-                catalogFilter:
-                    kind:
-                    - Group
-                    - User
+              catalogFilter:
+                kind:
+                  - Group
+                  - User
         system:
             title: System
             type: string

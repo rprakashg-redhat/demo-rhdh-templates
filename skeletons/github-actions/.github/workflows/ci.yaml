@@ -23,10 +23,10 @@ jobs:
       id: build-image
       uses: redhat-actions/buildah-build@v2
       with:
-        image: ${{ values.imageName }}
+        image: ${{ vars.IMAGE_NAME }}
         tags: ${{ env.IMAGE_TAGS }}
         containerfiles: |
-          ${{ values.dockerFile }}
+          cmd/server/Dockerfile
     - name: push image
       uses: redhat-actions/push-to-registry@v2
       with:

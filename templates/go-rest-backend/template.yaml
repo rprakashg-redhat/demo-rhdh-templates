@@ -87,24 +87,24 @@ spec:
       action: fetch:template
       input:
         url: ../../skeletons/github-actions/
-        values:
-          imageName: ${{ parameters.imageName }}
-          dockerFile: "cmd/server/Dockerfile"
+        copyWithoutTemplating:
+        - .github/workflows/
+        values: {}
 
-    #- id: catalogTemplate
-    #  name: Generating the Catalog Info Component
-    #  action: fetch:template
-    #  input:
-    #    url: ../../skeletons/catalog-info/
-    #    values:
-    #      repoName: ${{ parameters.repoName }}
-    #      entityKind: API
-    #      owner: ${{ parameters.owner }}
-    #      system: ${{ parameters.system }}
-    #      applicationType: api
-    #      description: ${{ parameters.description }}
-    #      lifecycle: experimental
-    #      dependsOn: ${{ parameters.dependsOn }}
+    - id: catalogTemplate
+      name: Generating the Catalog Info Component
+      action: fetch:template
+      input:
+        url: ../../skeletons/catalog-info/
+        values:
+          repoName: ${{ parameters.repoName }}
+          entityKind: API
+          owner: ${{ parameters.owner }}
+          system: ${{ parameters.system }}
+          applicationType: api
+          description: ${{ parameters.description }}
+          lifecycle: experimental
+          dependsOn: ${{ parameters.dependsOn }}
           
     - id: publish
       name: Publishing to the Source Code Repository

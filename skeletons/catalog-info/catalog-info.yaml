@@ -12,15 +12,11 @@ kind: Component
 {%- endif %}
 metadata:
   name: ${{ name }}
-  {%- if values.title %}
-  title: ${{ values.title }}
-  {%- endif %}
   {%- if values.description %}
   description: ${{ values.description }}
   {%- endif %}
   annotations:
     backstage.io/kubernetes-id: ${{ name }}
-    backstage.io/techdocs-ref: dir:.
     github.com/project-slug: ${{ values.orgName }}/${{ values.repoName }
 spec:
   type: ${{ values.applicationType }}

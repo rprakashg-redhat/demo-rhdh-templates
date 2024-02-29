@@ -15,6 +15,9 @@ metadata:
   {%- if values.description %}
   description: ${{ values.description }}
   {%- endif %}
+  annotations:
+    github.com/project-slug: ${{ values.orgName}}/${{values.repoName}}
+    backstage.io/techdocs-ref: dir:.  
 spec:
   type: ${{ values.applicationType }}
   {%- if values.system %}
@@ -29,4 +32,8 @@ spec:
   {%- if values.dependsOn %}
   dependsOn:
     - ${{ values.dependsOn }}
+  {%- endif %}
+  {%- if values.partOf %}
+  partOf:
+    - ${{ values.partOf }}
   {%- endif %}

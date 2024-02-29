@@ -56,6 +56,14 @@ spec:
           ui:options:
             catalogFilter:
               kind: Component
+        partOf:
+          title: part of
+          type: string
+          description: domain that this component is part of
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: Domain
       required:
       - orgName
       - repoName
@@ -97,6 +105,7 @@ spec:
       input:
         url: ../../skeletons/catalog-info/
         values:
+          orgName: ${{ parameters.orgName }}
           repoName: ${{ parameters.repoName }}
           entityKind: API
           owner: ${{ parameters.owner }}
@@ -105,7 +114,7 @@ spec:
           description: ${{ parameters.description }}
           lifecycle: experimental
           dependsOn: ${{ parameters.dependsOn }}
-          
+          partOf: ${{ parameters.partOf }}
     - id: publish
       name: Publishing to the Source Code Repository
       action: publish:github

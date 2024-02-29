@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	defaultServerPort         = "${{ values.port }}"
+	defaultServerPort         = ${{ values.port }}
 	defaultJWTExpirationHours = 72
 )
 

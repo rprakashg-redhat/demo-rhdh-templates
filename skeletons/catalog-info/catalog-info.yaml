@@ -19,9 +19,6 @@ metadata:
   description: ${{ values.description }}
   {%- endif %}
   annotations:
-    {%- if values.hostUrl %}
-    argocd/app-name: ${{ name }}
-    {%- endif %}
     backstage.io/kubernetes-id: ${{ name }}
     backstage.io/techdocs-ref: dir:.
     github.com/project-slug: ${{ values.orgName }}/${{ values.repoName }

@@ -22,18 +22,9 @@ metadata:
     {%- if values.hostUrl %}
     argocd/app-name: ${{ name }}
     {%- endif %}
-    {%- if values.ci == "../../../skeletons/tekton/" %}
-    tektonci/build-namespace: ${{ values.namespace }}
-    {%- endif %}
     backstage.io/kubernetes-id: ${{ name }}
     backstage.io/techdocs-ref: dir:.
-    {%- if values.sourceControl == "gitlab.com" %}
-    gitlab.com/project-slug: ${{ values.orgName }}/${{ values.repoName }}
-    {%- elif values.sourceControl == "github.com" %}
-    github.com/project-slug: ${{ values.orgName }}/${{ values.repoName }}
-    {%- elif values.sourceControl == "dev.azure.com" %}
-    dev.azure.com/project-repo: ${{ values.orgName }}/${{ values.repoName }}
-    {%- endif %}
+    github.com/project-slug: ${{ values.orgName }}/${{ values.repoName }
 spec:
   type: ${{ values.applicationType }}
   {%- if values.system %}
@@ -48,8 +39,4 @@ spec:
   {%- if values.dependsOn %}
   dependsOn:
     - ${{ values.dependsOn }}
-  {%- endif %}
-  {%- if values.partOf %}
-  partOf:
-    - ${{ values.partOf }}
   {%- endif %}

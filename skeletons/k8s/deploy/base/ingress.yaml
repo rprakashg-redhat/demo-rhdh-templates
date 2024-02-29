@@ -1,12 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ${{ values.repoName }}
-  namespace: ${{ values.namespace }}
+  name: ${{ values.repoName }}-ingress
   labels:
     app: ${{ values.repoName }}
     app.kubernetes.io/component: backstage
-    backstage.io/kubernetes-id: ${{ values.namespace }}
 spec:
   - host: ${{ values.hostUrl }}
     http:

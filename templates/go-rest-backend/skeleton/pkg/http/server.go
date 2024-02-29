@@ -42,7 +42,6 @@ func (s *server) Start(logger log.Logger) {
 		10*time.Second,
 		logger.Infof,
 	)
-	logger.Infof("server is running at %v", s.Addr)
 	if s.tls {
 		if err := s.ListenAndServeTLS(s.certFile, s.keyFile); err != nil {
 			logger.Error(err)
@@ -54,4 +53,5 @@ func (s *server) Start(logger log.Logger) {
 			os.Exit(-1)
 		}
 	}
+	logger.Infof("server is running at %v", s.Addr)
 }

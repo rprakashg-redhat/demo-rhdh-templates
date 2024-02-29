@@ -1,0 +1,133 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: go-rest-backend
+  title: go rest api backend
+  description: Create a rest api backend in go with CICD pipeline 
+  tags:
+  - go
+  - api
+  - microservice
+  - recommended
+spec:
+    owner: rgopinat@redhat.com
+    type: service
+
+    parameters:
+    - title: Provide information about the new component
+      properties:
+        orgName:
+            title: GitHub Org
+            type: string
+        repoName: 
+            title: Repository Name
+            type: string
+        description: 
+            title: Description
+            type: string
+            description: Provide a description which will help others understand what this component is for
+        owner:
+            title: Owner
+            type: string
+            ui:field: EntityPicker
+            ui:options:
+                catalogFilter:
+                    kind:
+                    - Group
+                    - User
+        system:
+            title: System
+            type: string
+            ui:field: EntityPicker
+            ui:options:
+                catalogFilter:
+                    kind:
+                    - System
+        port:
+            title: Port
+            type: number
+            default: 8080
+            description: port at which the server is going to listen for HTTP requests
+        dependsOn:
+          title: depends on
+          type: string
+          description: "Component that this component depends on"
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: Component
+      required:
+      - orgName
+      - repoName
+      - owner
+      - system
+      - port
+    - title: Provide information about CICD
+      properties:
+        imageName:
+            title: Container image name
+            type: string
+      required:
+      - imageName
+
+    steps:
+    - id: sourceCodeTemplate
+      name: Generating the Source Code Component
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          orgName: ${{ parameters.orgName }}
+          repoName: ${{ parameters.repoName }}
+          sourceControl: github.com
+          port: ${{ parameters.port }}          
+    
+    - id: ciTemplate
+      name: Generating the CI Component
+      action: fetch:template
+      input:
+        url: ../../skeletons/github-actions/
+        copyWithoutTemplating:
+        - .github/workflows/
+        values:
+          imageName: ${{ parameters.imageName }}
+          dockerFile: "cmd/server/Dockerfile"
+
+    - id: catalogTemplate
+      name: Generating the Catalog Info Component
+      action: fetch:template
+      input:
+        url: ../../../skeletons/catalog-info/
+        values:
+          repoName: ${{ parameters.repoName }}
+          entityKind: API
+          owner: ${{ parameters.owner }}
+          system: ${{ parameters.system }}
+          applicationType: api
+          description: ${{ parameters.description }}
+          lifecycle: experimental
+          dependsOn: ${{ parameters.dependsOn }}
+          
+    - id: publish
+      name: Publishing to the Source Code Repository
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        description: ${{ parameters.description }}
+        repoUrl: github.com?owner=${{ parameters.orgName }}&repo=${{ parameters.repoName }}
+        defaultBranch: main
+
+    - id: register
+      name: Registering the Catalog Info Component
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+
+    output:
+        links:
+        - title: Open the Source Code Repository
+          url: ${{ steps.publish.output.remoteUrl }}
+        - title: Open the Catalog Info Component
+          icon: catalog
+          entityRef: ${{ steps.register.output.entityRef }}

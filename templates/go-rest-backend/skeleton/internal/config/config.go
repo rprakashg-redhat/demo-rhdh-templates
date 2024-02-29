@@ -3,8 +3,8 @@ package config
 import (
 	"os"
 
+	"github.com/${{values.orgName}}/${{values.repoName}}/pkg/log"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/rprakashg-redhat/go-rest-backend/pkg/log"
 	"gopkg.in/yaml.v2"
 )
 

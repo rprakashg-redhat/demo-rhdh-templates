@@ -1,9 +1,9 @@
 package http
 
 import (
+	health "github.com/${{values.orgName}}/${{values.repoName}}/internal/healthcheck"
+	"github.com/${{values.orgName}}/${{values.repoName}}/internal/metrics"
 	routing "github.com/go-ozzo/ozzo-routing/v2"
-	health "github.com/rprakashg-redhat/go-rest-backend/internal/healthcheck"
-	"github.com/rprakashg-redhat/go-rest-backend/internal/metrics"
 )
 
 func newRouter(routes Routes) *routing.Router {

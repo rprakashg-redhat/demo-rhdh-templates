@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/${{values.orgName}}/${{values.repoName}}/pkg/log"
 	routing "github.com/go-ozzo/ozzo-routing/v2"
-	"github.com/rprakashg-redhat/go-rest-backend/pkg/log"
 )
 
 // Server base http server

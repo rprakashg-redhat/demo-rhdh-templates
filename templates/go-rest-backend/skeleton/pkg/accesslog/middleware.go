@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/${{values.orgName}}/${{values.repoName}}/pkg/log"
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/go-ozzo/ozzo-routing/v2/access"
-	"github.com/rprakashg-redhat/go-rest-backend/pkg/log"
 )
 
 // Handler returns a middleware that records an access log message for every HTTP request being processed.

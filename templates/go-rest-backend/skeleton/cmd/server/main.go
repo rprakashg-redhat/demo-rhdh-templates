@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/rprakashg-redhat/go-rest-backend/internal/config"
-	"github.com/rprakashg-redhat/go-rest-backend/pkg/http"
-	"github.com/rprakashg-redhat/go-rest-backend/pkg/log"
+	"github.com/${{values.orgName}}/${{values.repoName}}/internal/config"
+	"github.com/${{values.orgName}}/${{values.repoName}}/pkg/http"
+	"github.com/${{values.orgName}}/${{values.repoName}}/pkg/log"
 )
 
 var (

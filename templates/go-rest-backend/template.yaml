@@ -87,8 +87,6 @@ spec:
       action: fetch:template
       input:
         url: ../../skeletons/github-actions/
-        copyWithoutTemplating:
-        - .github/workflows/
         values:
           imageName: ${{ parameters.imageName }}
           dockerFile: "cmd/server/Dockerfile"

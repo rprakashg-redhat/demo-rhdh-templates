@@ -4,6 +4,5 @@ metadata:
   name: demo-rhdh-collection
   description: A collection of Golden path templates for Red Hat Developer Hub
 spec:
-  type: url
   targets:
-  - templates/go-rest-backend
+    - ./templates/go-rest-backend/template.yaml

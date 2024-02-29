@@ -107,7 +107,6 @@ spec:
         values:
           orgName: ${{ parameters.orgName }}
           repoName: ${{ parameters.repoName }}
-          entityKind: API
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
           applicationType: api
@@ -115,6 +114,7 @@ spec:
           lifecycle: experimental
           dependsOn: ${{ parameters.dependsOn }}
           partOf: ${{ parameters.partOf }}
+
     - id: publish
       name: Publishing to the Source Code Repository
       action: publish:github

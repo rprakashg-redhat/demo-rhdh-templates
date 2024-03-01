@@ -1,3 +1,4 @@
+{%- if values.ingressClassName and values.host %}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -6,7 +7,8 @@ metadata:
     app: ${{ values.repoName }}
     app.kubernetes.io/component: backstage
 spec:
-  - host: ${{ values.hostUrl }}
+  ingressClassName: ${{ values.ingressClassName }}
+  - host: ${{ values.host }}
     http:
       paths:
         - path: /
@@ -16,3 +18,4 @@ spec:
               name: ${{ values.repoName }}
               port:
                 number: ${{ values.port }}
+{%- endif %}

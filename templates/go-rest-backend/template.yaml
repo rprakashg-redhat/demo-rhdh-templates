@@ -48,6 +48,21 @@ spec:
             type: number
             default: 8080
             description: port at which the server is going to listen for HTTP requests
+        host:
+          title: host
+          type: string
+          description: host URL
+        ingress:
+          title: ingress class
+          type: string
+          description: Ingress classname
+          default: haproxy
+          enum:
+            - haproxy
+            - nginx
+          enumNames:
+            - HA Proxy
+            - NGINX
         dependsOn:
           title: depends on
           type: string
@@ -55,7 +70,7 @@ spec:
           ui:field: EntityPicker
           ui:options:
             catalogFilter:
-              kind: Component
+              kind: [Component, Resource]
         partOf:
           title: part of
           type: string
@@ -75,8 +90,12 @@ spec:
         imageName:
             title: Container image name
             type: string
+        namespace:
+          title: k8s Namespace
+          type: string 
       required:
       - imageName
+      - namespace
 
     steps:
     - id: sourceCodeTemplate
@@ -98,6 +117,33 @@ spec:
         copyWithoutTemplating:
         - .github/workflows/
         values: {}
+
+    - id: deployManifests
+      name: "Generating deployment manifests"
+      action: fetch:template
+      input:
+        url: ../../skeletons/k8s
+        values:
+          repoName: ${{ parameters.repoName }}
+          imageRegistry: github.com
+          orgName: ${{ parameters.orgName }}
+          imageName: ${{ parameters.imageName }}
+          port: ${{ parameters.port }}
+          host: ${{ parameters.host }}
+          ingressClassName: ${{ parameters.ingress }}
+    
+    - id: gitOpsTemplate
+      name: "Generating ArgoCD applicationset definition"
+      action: fetch:template
+      input:
+        targetPath: dev
+        url: ../../skeletons/gitops/
+        values:
+          repoName: ${{ parameters.repoName }}
+          environment: dev
+          sourceControl: github.com
+          orgName: ${{ parameters.orgName }}
+          namespace: ${{ parameters.namespace }}
 
     - id: catalogTemplate
       name: Generating the Catalog Info Component

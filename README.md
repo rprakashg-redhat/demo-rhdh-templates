@@ -1,2 +1,2 @@
-# demo-rhdh-templates
-Golden path template collection for Red Hat Developer hub
+# rhdh-templates
+Just a collection of Golden path software templates for Red Hat Developer hub/Backstage

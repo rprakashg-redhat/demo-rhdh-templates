@@ -149,10 +149,10 @@ spec:
       name: Generating docs files
       action: fetch:template
       input:
-        url: ../../skeleton/techdocs
+        url: ../../skeletons/techdocs
         values:
           description: ${{ parameters.description }}
-          
+
     - id: catalogTemplate
       name: Generating the Catalog Info Component
       action: fetch:template

@@ -149,7 +149,7 @@ spec:
       name: Generating docs files
       action: fetch:template
       input:
-        url: ../../skeletons/techdocs
+        url: ../../skeletons/techdocs/
         values:
           description: ${{ parameters.description }}
 

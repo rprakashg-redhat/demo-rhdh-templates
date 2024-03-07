@@ -145,6 +145,14 @@ spec:
           orgName: ${{ parameters.orgName }}
           namespace: ${{ parameters.namespace }}
 
+    - id: docsTemplate
+      name: Generating docs files
+      action: fetch:template
+      input:
+        url: ../../skeleton/techdocs
+        values:
+          description: ${{ parameters.description }}
+          
     - id: catalogTemplate
       name: Generating the Catalog Info Component
       action: fetch:template

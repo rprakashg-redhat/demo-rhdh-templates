@@ -35,6 +35,16 @@ spec:
                 kind:
                   - Group
                   - User
+        repoVisibility:
+          title: Repo visibility
+          type: string
+          default: Public
+          enum:
+            - pubic
+            - private
+          enumNames:
+            - Public
+            - Private
         system:
             title: System
             type: string
@@ -83,7 +93,6 @@ spec:
       - orgName
       - repoName
       - owner
-      - system
       - port
     - title: Provide information about CICD
       properties:
@@ -122,7 +131,8 @@ spec:
       name: "Generating deployment manifests"
       action: fetch:template
       input:
-        url: ../../skeletons/k8s
+        url: ../../skeletons/kustomize
+        targetPath: deploy/k8s
         values:
           repoName: ${{ parameters.repoName }}
           imageRegistry: github.com
@@ -136,7 +146,7 @@ spec:
       name: "Generating ArgoCD applicationset definition"
       action: fetch:template
       input:
-        targetPath: dev
+        targetPath: deploy/gitops
         url: ../../skeletons/gitops/
         values:
           repoName: ${{ parameters.repoName }}
@@ -151,6 +161,7 @@ spec:
       input:
         url: ../../skeletons/techdocs/
         values:
+          name: ${{ parameters.name }}
           description: ${{ parameters.description }}
 
     - id: catalogTemplate
@@ -174,6 +185,7 @@ spec:
       action: publish:github
       input:
         allowedHosts: ['github.com']
+        repoVisibility: ${{ parameters.repoVisibility }}
         description: ${{ parameters.description }}
         repoUrl: github.com?owner=${{ parameters.orgName }}&repo=${{ parameters.repoName }}
         defaultBranch: main

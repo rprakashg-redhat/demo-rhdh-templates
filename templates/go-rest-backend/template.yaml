@@ -38,13 +38,15 @@ spec:
         repoVisibility:
           title: Repo visibility
           type: string
-          default: Public
+          default: public
           enum:
             - pubic
             - private
+            - internal
           enumNames:
             - Public
             - Private
+            - Internal
         system:
             title: System
             type: string

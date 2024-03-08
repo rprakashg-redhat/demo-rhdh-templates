@@ -148,7 +148,7 @@ spec:
         url: ../../skeletons/gitops/
         values:
           repoName: ${{ parameters.repoName }}
-          environment: gitops/dev
+          environment: dev
           sourceControl: github.com
           orgName: ${{ parameters.orgName }}
           namespace: ${{ parameters.namespace }}

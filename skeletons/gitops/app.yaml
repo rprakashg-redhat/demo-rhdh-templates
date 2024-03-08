@@ -18,7 +18,7 @@ spec:
     spec:
       source:
         repoURL: https://${{ values.sourceControl }}/${{ values.orgName }}/${{ values.repoName }}
-        path: deploy/overlays/${{ values.environment }}
+        path: deploy/k8s/overlays/${{ values.environment }}
         targetRevision: main
 
       destination:

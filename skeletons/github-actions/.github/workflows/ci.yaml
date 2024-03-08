@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "source"
+  workflow_dispatch:
+    
 env:
   IMAGE_TAGS: ${{ github.sha }}
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
@@ -18,7 +20,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-
+      
     steps:
     - uses: actions/checkout@v3
     - name: get repo name
@@ -48,6 +50,7 @@ jobs:
     env:
       TECHDOCS_S3_BUCKET_NAME: ${{ vars.TECHDOCS_S3_BUCKET_NAME }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ vars.AWS_REGION }}
       NAMESPACE: ${{ vars.K8S_NAMESPACE }}
       KIND: 'Component'

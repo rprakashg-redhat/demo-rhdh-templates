@@ -40,7 +40,7 @@ spec:
           type: string
           default: public
           enum:
-            - pubic
+            - public
             - private
             - internal
         system:

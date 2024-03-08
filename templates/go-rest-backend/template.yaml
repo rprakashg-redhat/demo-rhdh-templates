@@ -43,10 +43,6 @@ spec:
             - pubic
             - private
             - internal
-          enumNames:
-            - Public
-            - Private
-            - Internal
         system:
             title: System
             type: string

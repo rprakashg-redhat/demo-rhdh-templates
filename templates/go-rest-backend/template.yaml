@@ -159,7 +159,7 @@ spec:
       input:
         url: ../../skeletons/techdocs/
         values:
-          name: ${{ parameters.name }}
+          name: ${{ parameters.repoName }}
           description: ${{ parameters.description }}
 
     - id: catalogTemplate

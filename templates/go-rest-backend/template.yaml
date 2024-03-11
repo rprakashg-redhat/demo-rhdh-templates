@@ -25,6 +25,14 @@ spec:
         repoName: 
             title: Repository Name
             type: string
+        repoVisibility:
+          title: Repo visibility
+          type: string
+          default: public
+          enum:
+            - public
+            - private
+            - internal
         description: 
             title: Description
             type: string
@@ -38,14 +46,6 @@ spec:
                 kind:
                   - Group
                   - User
-        repoVisibility:
-          title: Repo visibility
-          type: string
-          default: public
-          enum:
-            - public
-            - private
-            - internal
         port:
             title: Port
             type: number
@@ -66,6 +66,14 @@ spec:
           enumNames:
             - HA Proxy
             - NGINX
+        system:
+          title: System
+          type: string
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind:
+                - System
         dependsOn:
           title: depends on
           type: string
@@ -84,6 +92,7 @@ spec:
               kind: Domain
       required:
       - definition
+      - system
       - orgName
       - repoName
       - owner
@@ -93,22 +102,8 @@ spec:
         namespace:
           title: k8s Namespace
           type: string 
-        environments:
-          title: environments to deploy
-          type: array
-          items:
-            type: string
-            enum:
-              - dev
-              - test
-              - prod
-            enumNames:
-              - Development
-              - Testing
-              - Production
       required:
       - namespace
-
     steps:
     - id: sourceCodeTemplate
       name: Generating the Source Code Component
@@ -138,9 +133,8 @@ spec:
         targetPath: deploy/k8s
         values:
           repoName: ${{ parameters.repoName }}
-          imageRegistry: github.com
+          imageRegistry: ghcr.io
           orgName: ${{ parameters.orgName }}
-          imageName: ${{ parameters.imageName }}
           port: ${{ parameters.port }}
           host: ${{ parameters.host }}
           ingressClassName: ${{ parameters.ingress }}
@@ -183,7 +177,7 @@ spec:
           lifecycle: experimental
           dependsOn: ${{ parameters.dependsOn }}
           partOf: ${{ parameters.partOf }}
-          definition: ${ parameters.swagger }
+          definition: ${{ parameters.definition }}
 
     - id: publish
       name: Publishing to the Source Code Repository
@@ -203,9 +197,9 @@ spec:
         catalogInfoPath: /catalog-info.yaml
 
     output:
-        links:
-        - title: Open the Source Code Repository
-          url: ${{ steps.publish.output.remoteUrl }}
-        - title: Open the Catalog Info Component
-          icon: catalog
-          entityRef: ${{ steps.register.output.entityRef }}
+      links:
+      - title: Open the Source Code Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open the Catalog Info Component
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}

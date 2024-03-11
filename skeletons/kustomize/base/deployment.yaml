@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ${{ values.repoName }}
-          image: ${{ values.imageRegistry }}/${{ values.orgName }}/${{ values.imageName }}:latest
+          image: ${{ values.imageRegistry }}/${{ values.orgName }}/${{ values.repoName }}:latest
           ports:
             - name: http-${{ values.port }}
               containerPort: ${{ values.port }}

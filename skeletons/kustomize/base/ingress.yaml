@@ -6,6 +6,7 @@ metadata:
   labels:
     app: ${{ values.repoName }}
     app.kubernetes.io/component: backstage
+    backstage.io/kubernetes-id: ${{ values.repoName }}
 spec:
   ingressClassName: ${{ values.ingressClassName }}
   - host: ${{ values.host }}

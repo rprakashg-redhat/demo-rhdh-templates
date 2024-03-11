@@ -168,6 +168,7 @@ spec:
       input:
         url: ../../skeletons/catalog-info/
         values:
+          entityKind: API
           orgName: ${{ parameters.orgName }}
           repoName: ${{ parameters.repoName }}
           owner: ${{ parameters.owner }}

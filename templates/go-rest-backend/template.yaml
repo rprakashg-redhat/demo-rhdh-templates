@@ -66,6 +66,14 @@ spec:
           enumNames:
             - HA Proxy
             - NGINX
+        system:
+          title: System
+          type: string
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind:
+                - System
         dependsOn:
           title: depends on
           type: string
@@ -84,6 +92,7 @@ spec:
               kind: Domain
       required:
       - definition
+      - system
       - orgName
       - repoName
       - owner

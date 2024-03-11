@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - "source"
-      - 'mkdocs.yaml'
   workflow_dispatch:
     
 env:

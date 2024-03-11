@@ -14,8 +14,11 @@ spec:
     type: service
 
     parameters:
-    - title: Provide information about the new component
+    - title: Provide information about the service
       properties:
+        definition:
+          title: OpenAPI based API definition
+          type: string
         orgName:
             title: GitHub Org
             type: string
@@ -43,14 +46,6 @@ spec:
             - public
             - private
             - internal
-        system:
-            title: System
-            type: string
-            ui:field: EntityPicker
-            ui:options:
-                catalogFilter:
-                    kind:
-                    - System
         port:
             title: Port
             type: number
@@ -88,20 +83,30 @@ spec:
             catalogFilter:
               kind: Domain
       required:
+      - definition
       - orgName
       - repoName
       - owner
       - port
-    - title: Provide information about CICD
+    - title: Provide Information about deployment targets 
       properties:
-        imageName:
-            title: Container image name
-            type: string
         namespace:
           title: k8s Namespace
           type: string 
+        environments:
+          title: environments to deploy
+          type: array
+          items:
+            type: string
+            enum:
+              - dev
+              - test
+              - prod
+            enumNames:
+              - Development
+              - Testing
+              - Production
       required:
-      - imageName
       - namespace
 
     steps:
@@ -173,11 +178,12 @@ spec:
           repoName: ${{ parameters.repoName }}
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
-          applicationType: api
+          applicationType: openapi
           description: ${{ parameters.description }}
           lifecycle: experimental
           dependsOn: ${{ parameters.dependsOn }}
           partOf: ${{ parameters.partOf }}
+          definition: ${ parameters.swagger }
 
     - id: publish
       name: Publishing to the Source Code Repository

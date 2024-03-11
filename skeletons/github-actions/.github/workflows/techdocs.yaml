@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - "docs"
+      - 'mkdocs.yaml'
   workflow_dispatch:
 
 jobs:

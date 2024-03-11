@@ -33,7 +33,7 @@ jobs:
         tags: ${{ env.IMAGE_TAGS }}
         context: source
         containerfiles: |
-          cmd/server/Dockerfile
+          source/cmd/server/Dockerfile
     - name: push image
       uses: redhat-actions/push-to-registry@v2
       with:

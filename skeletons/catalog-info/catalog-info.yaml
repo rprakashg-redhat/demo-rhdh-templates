@@ -38,3 +38,7 @@ spec:
   partOf:
     - ${{ values.partOf }}
   {%- endif %}
+  {%- if values.definition %}
+  definition: |
+    #{{ values.definition }}
+  {%- endif %}   

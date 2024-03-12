@@ -8,7 +8,7 @@ RUN apk update && \
             ca-certificates && \
     rm -rf /var/cache/apk/*
 
-WORKDIR /app/source
+WORKDIR /app
 
 # copy go module files first
 COPY go.* ./

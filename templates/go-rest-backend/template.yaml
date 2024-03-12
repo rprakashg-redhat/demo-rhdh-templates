@@ -19,6 +19,24 @@ spec:
         definition:
           title: OpenAPI based API definition
           type: string
+          description: OpenAPI based API definition
+          ui:widget: textarea
+          ui:options:
+            rows: 10
+          ui:help: 'Hint: Make it strong!'
+          ui:placeholder: |
+            openapi: "3.0.0"
+            info:
+              version: 1.0.0
+              title: Artist API
+              license:
+                name: MIT
+            servers:
+              - url: http://artist.spotify.net/v1
+            paths:
+              /artists:
+                get:
+                  summary: List all artists
         orgName:
             title: GitHub Org
             type: string

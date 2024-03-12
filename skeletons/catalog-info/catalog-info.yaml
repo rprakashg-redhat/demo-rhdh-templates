@@ -40,5 +40,5 @@ spec:
   {%- endif %}
   {%- if values.definition %}
   definition: |
-    ${{ values.definition }}
+    $openapi: ${{ values.definition }}
   {%- endif %}   

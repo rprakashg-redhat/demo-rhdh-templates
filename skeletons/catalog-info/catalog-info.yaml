@@ -42,3 +42,13 @@ spec:
   definition: |
     $openapi: ${{ values.definition }}
   {%- endif %}   
+  {%- if values.providesApis %}
+  providesApis: 
+  - ${{ values.providesApis }}
+  {%- endif %}
+  {%- if values.consumesApis %}
+  consumesApis: 
+  {%- for item in values.consumesApis %}
+  - ${{ item }}
+  {% endfor %}
+  {%- endif %}

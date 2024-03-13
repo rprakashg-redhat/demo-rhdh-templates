@@ -12,17 +12,19 @@ spec:
     parameters:
     - title: Provide information about API spec
       required:
-      - repoUrl
-      - reviewers  
+      - org
+      - repoName
+      - reviewers
+      - pr_branch  
       properties:
-        repoUrl:
-          title: Repository Url
+        org:
+          title: Org
+          type: string
+          description: GitHub Org
+        repoName:
+          title: Repository Name
           type: string
           description: Repository where the api specifications are stored
-          ui:field: RepoUrlPicker
-          ui:options:
-            allowedHosts:
-            - github.com
         reviewers:
           title: Reviewers
           type: array
@@ -43,7 +45,10 @@ spec:
             - .yaml
             - .yml
             - .json
-
+        pr_branch:
+          title: PR branch
+          type: string
+          description: Pull Request Branch
     steps:
     - id: log-parameters
       name: log parameter values
@@ -53,11 +58,11 @@ spec:
           'Repository URL: ${{ parameters.repoUrl }}'
           'Reviewers: ${{ parameters.reviewers }}'
           'Spec: ${{ parameters.spec }}'  
-    #- id: fetch-repo
-    #  name: fetch repo
-    #  action: fetch:plain
-    #  input:
-    #    url: ${{ parameters.repoUrl }}
+    - id: fetch-repo
+      name: fetch repo
+      action: fetch:plain
+      input:
+        url: https://github.com/${{ parameters.org }}/${{ parameters.repoName }}
     #- id: open-pr
     #  name: Open pull request
     #  action: publish:github:pull-request

@@ -89,13 +89,11 @@ spec:
               kind: Domain
         providesApis:
           title: Apis provided by this component
-          type: array
-          items:
-            type: string
-            ui:field: EntityPicker
-            ui:options:
-              catalogFilter:
-                kind: [API]
+          type: string
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: [API]
         consumesApis:
           title: Apis consumed by this component
           type: array
@@ -192,7 +190,8 @@ spec:
           lifecycle: experimental
           dependsOn: ${{ parameters.dependsOn }}
           partOf: ${{ parameters.partOf }}
-
+          providesApis: ${{ parameters.providesApis }}
+          consumesApis: ${{ parameters.consumesApis }}
     - id: publish
       name: Publishing to the Source Code Repository
       action: publish:github

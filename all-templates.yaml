@@ -6,3 +6,4 @@ metadata:
 spec:
   targets:
     - ./templates/go-rest-backend/template.yaml
+    - ./templates/apispec-catalog/template.yaml

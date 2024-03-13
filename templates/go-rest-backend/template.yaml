@@ -16,10 +16,6 @@ spec:
     parameters:
     - title: Provide information about the service
       properties:
-        definition:
-          title: OpenAPI based API definition
-          type: string
-          description: OpenAPI based API definition
         orgName:
             title: GitHub Org
             type: string
@@ -82,7 +78,7 @@ spec:
           ui:field: EntityPicker
           ui:options:
             catalogFilter:
-              kind: [Component, Resource]
+              kind: [Resource]
         partOf:
           title: part of
           type: string
@@ -91,13 +87,31 @@ spec:
           ui:options:
             catalogFilter:
               kind: Domain
+        providesApis:
+          title: Apis provided by this component
+          type: array
+          items:
+            type: string
+            ui:field: EntityPicker
+            ui:options:
+              catalogFilter:
+                kind: [API]
+        consumesApis:
+          title: Apis consumed by this component
+          type: array
+          items:
+            type: string
+            ui:field: EntityPicker
+            ui:options:
+              catalogFilter:
+                kind: [API]
       required:
-      - definition
       - system
       - orgName
       - repoName
       - owner
       - port
+      - providesApis
     - title: Provide Information about deployment targets 
       properties:
         namespace:
@@ -168,17 +182,16 @@ spec:
       input:
         url: ../../skeletons/catalog-info/
         values:
-          entityKind: API
+          entityKind: Component
           orgName: ${{ parameters.orgName }}
           repoName: ${{ parameters.repoName }}
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
-          applicationType: openapi
+          applicationType: service
           description: ${{ parameters.description }}
           lifecycle: experimental
           dependsOn: ${{ parameters.dependsOn }}
           partOf: ${{ parameters.partOf }}
-          definition: ${{ parameters.definition }}
 
     - id: publish
       name: Publishing to the Source Code Repository

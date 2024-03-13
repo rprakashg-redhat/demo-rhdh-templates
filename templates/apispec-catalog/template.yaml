@@ -1,0 +1,71 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+    name: apispec-catalog
+    title: template to catalog api specs
+    description: This template can be used for cataloging all API specs. Specs are stored in a Git repository 
+spec:
+    owner: janus-authors
+    system: janus-idp
+    type: service
+
+    parameters:
+    - title: Provide information about API spec
+      required:
+      - repoUrl
+      - reviewers  
+      properties:
+        repoUrl:
+          title: Repository Url
+          type: string
+          description: Repository where the api specifications are stored
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+            - github.com
+        reviewers:
+          title: Reviewers
+          type: array
+          items:
+            type: string
+            ui:field: EntityPicker
+            ui:options:
+              catalogFilter:
+                kind: [User, Group]
+          uniqueItems: true
+          description: Select list of users that need to review this API specification 
+        spec:
+          title: Api specification
+          type: string
+          format: data-url
+          ui:options:
+            accept:
+            - .yaml
+            - .yml
+            - .json
+
+    steps:
+    - id: log-parameters
+      name: log parameter values
+      action: debug:log
+      input:
+        message: |
+          'Repository URL: ${{ parameters.repoUrl }}'
+          'Reviewers: ${{ parameters.reviewers }}'
+          'Spec: ${{ parameters.spec }}'  
+    #- id: fetch-repo
+    #  name: fetch repo
+    #  action: fetch:plain
+    #  input:
+    #    url: ${{ parameters.repoUrl }}
+    #- id: open-pr
+    #  name: Open pull request
+    #  action: publish:github:pull-request
+    #  input:
+    #    branchName: ${{ parameters.pr_branch }}
+    #    title: 'PR'
+    #    description: 'Pull request created by Backstage scaffolder'
+    #output:
+    #  links:
+    #  - title: PR Url
+    #    url: ${{ steps["open-pr"].output.remoteUrl }}

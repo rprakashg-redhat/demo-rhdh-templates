@@ -201,7 +201,8 @@ spec:
         description: ${{ parameters.description }}
         repoUrl: github.com?owner=${{ parameters.orgName }}&repo=${{ parameters.repoName }}
         defaultBranch: main
-
+        token: ${{ secrets.USER_OAUTH_TOKEN }}
+        
     - id: register
       name: Registering the Catalog Info Component
       action: catalog:register

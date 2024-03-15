@@ -117,6 +117,7 @@ spec:
           type: string
         sonarOrg:
           title: Sonar Organization
+          type: string
         required:
         - sonarHost
         - sonarOrg

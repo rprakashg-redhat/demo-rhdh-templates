@@ -112,14 +112,14 @@ spec:
       - providesApis
     - title: Provide information about Sonarqube Instance
       properties:
-        host:
+        sonarHost:
           title: Sonar Host Url
           type: string
-        org:
+        sonarOrg:
           title: Sonar Organization
         required:
-        - host
-        - prg
+        - sonarHost
+        - sonarOrg
     - title: Provide Information about deployment targets 
       properties:
         namespace:
@@ -190,8 +190,8 @@ spec:
       input:
         url: ../../skeletons/sonarqube
         values:
-          sonarhost: ${{ parameters.host }}
-          sonarorg: ${{ parameters.org }}
+          sonarhost: ${{ parameters.sonarHost }}
+          sonarorg: ${{ parameters.sonarOrg }}
           projectKey: ${{ parameters.repoName }}
           projectName: ${{ parameters.repoName }}
           sourceDir: source
@@ -215,6 +215,7 @@ spec:
           partOf: ${{ parameters.partOf }}
           providesApis: ${{ parameters.providesApis }}
           consumesApis: ${{ parameters.consumesApis }}
+
     - id: publish
       name: Publishing to the Source Code Repository
       action: publish:github

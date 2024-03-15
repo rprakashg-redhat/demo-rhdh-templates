@@ -2,8 +2,8 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
     name: apispec-catalog
-    title: template to catalog api specs
-    description: This template can be used for cataloging all API specs. Specs are stored in a Git repository 
+    title: Template to catalog API specifications
+    description: This template can be used for cataloging all API specifications. Specs are stored in a Git repository 
 spec:
     owner: janus-authors
     system: janus-idp

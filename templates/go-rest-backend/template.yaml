@@ -110,6 +110,16 @@ spec:
       - owner
       - port
       - providesApis
+    - title: Provide information about Sonarqube Instance
+      properties:
+        host:
+          title: Sonar Host Url
+          type: string
+        org:
+          title: Sonar Organization
+        required:
+        - host
+        - prg
     - title: Provide Information about deployment targets 
       properties:
         namespace:
@@ -173,6 +183,19 @@ spec:
         values:
           name: ${{ parameters.repoName }}
           description: ${{ parameters.description }}
+
+    - id: sonarqubeTemplate
+      name: Generating Sonarqube properties file
+      action: fetch:template
+      input:
+        url: ../../skeletons/sonarqube
+        values:
+          sonarhost: ${{ parameters.host }}
+          sonarorg: ${{ parameters.org }}
+          projectKey: ${{ parameters.repoName }}
+          projectName: ${{ parameters.repoName }}
+          sourceDir: source
+          language: go
 
     - id: catalogTemplate
       name: Generating the Catalog Info Component

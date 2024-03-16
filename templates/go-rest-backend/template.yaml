@@ -196,8 +196,8 @@ spec:
           sonarorg: ${{ parameters.sonarOrg }}
           projectKey: ${{ parameters.repoName }}
           projectName: ${{ parameters.repoName }}
-          sourceDir: source
-          language: go
+          sourceDir: 'source'
+          language: 'go'
 
     - id: catalogTemplate
       name: Generating the Catalog Info Component

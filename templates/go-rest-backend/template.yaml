@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: go-rest-backend
-  title: go rest api backend
+  title: Go REST Backend
   description: Create a rest api backend in go with CICD pipeline 
   tags:
   - go
@@ -34,6 +34,12 @@ spec:
             title: Description
             type: string
             description: Provide a description which will help others understand what this component is for
+        sonarHost:
+          title: Sonar Host Url
+          type: string
+        sonarOrg:
+          title: Sonar Organization
+          type: string
         owner:
             title: Owner
             type: string
@@ -110,17 +116,6 @@ spec:
       - owner
       - port
       - providesApis
-    - title: Provide information about Sonarqube Instance
-      properties:
-        sonarHost:
-          title: Sonar Host Url
-          type: string
-        sonarOrg:
-          title: Sonar Organization
-          type: string
-        required:
-        - sonarHost
-        - sonarOrg
     - title: Provide Information about deployment targets 
       properties:
         namespace:
@@ -128,7 +123,6 @@ spec:
           type: string 
       required:
       - namespace
-    
     steps:
     - id: sourceCodeTemplate
       name: Generating the Source Code Component

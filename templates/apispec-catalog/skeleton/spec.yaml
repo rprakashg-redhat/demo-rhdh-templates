@@ -1,4 +1,4 @@
 {%- set tokens = values.spec.split(';') %}
 {%- set data = tokens[2].split(',') %}
 
-${{ data[1] | b64decode }}
+${{ data[1] }}

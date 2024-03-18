@@ -1,5 +1,5 @@
 {%- set tokens = values.spec.split(';') %}
 {%- set data = tokens[2].split(',') %}
-{%- set decoded = data[1] | b64decode }
+{%- set decoded = (data[1] | b64decode) }
 
 ${{ decoded }}

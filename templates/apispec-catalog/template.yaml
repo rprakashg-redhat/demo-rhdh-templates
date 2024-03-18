@@ -74,15 +74,6 @@ spec:
           description: Pull Request Branch
 
     steps:
-    - id: log-parameters
-      name: log parameter values
-      action: debug:log
-      input:
-        message: |
-          'Repository URL: ${{ parameters.repoUrl }}'
-          'Reviewers: ${{ parameters.reviewers }}'
-          'Spec: ${{ parameters.spec }}'  
-    
     # fetch repo      
     - id: fetch-repo
       name: fetch repo

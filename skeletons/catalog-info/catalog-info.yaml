@@ -40,7 +40,7 @@ spec:
   {%- endif %}
   {%- if values.definition %}
   definition: |
-    $openapi: ${{ values.definition }}
+    $text: ./${{ values.definition }}
   {%- endif %}   
   {%- if values.providesApis %}
   providesApis: 

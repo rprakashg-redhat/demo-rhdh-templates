@@ -10,21 +10,53 @@ spec:
     type: service
 
     parameters:
-    - title: Provide information about API spec
+    - title: Provide information about API
       required:
-      - org
-      - repoName
-      - reviewers
-      - pr_branch  
+      - name
+      - spec
+      - owner
       properties:
-        org:
-          title: Org
+        name:
+          title: Name
           type: string
-          description: GitHub Org
-        repoName:
-          title: Repository Name
+          description: API Name
+        description:
+          title: Description
+          type: string
+          description: API Description
+        spec:
+          title: Specification
+          type: string
+          description: API Specification
+          format: data-url
+          ui:options:
+            accept:
+            - .yaml
+            - .yml
+            - .json
+        owner:
+          title: Owner
+          type: string
+          description: API Owner
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: [User, Group]
+
+    - title: Provide information about Git Repo
+      required:
+      - repoUrl
+      - reviewers
+      - pr_branch
+      properties:
+        repoUrl:
+          title: Repository Url
           type: string
           description: Repository where the api specifications are stored
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+            - github.com
         reviewers:
           title: Reviewers
           type: array
@@ -35,20 +67,12 @@ spec:
               catalogFilter:
                 kind: [User, Group]
           uniqueItems: true
-          description: Select list of users that need to review this API specification 
-        spec:
-          title: Api specification
-          type: string
-          format: data-url
-          ui:options:
-            accept:
-            - .yaml
-            - .yml
-            - .json
+          description: Select list of users that need to review this API specification
         pr_branch:
           title: PR branch
           type: string
           description: Pull Request Branch
+
     steps:
     - id: log-parameters
       name: log parameter values
@@ -58,19 +82,69 @@ spec:
           'Repository URL: ${{ parameters.repoUrl }}'
           'Reviewers: ${{ parameters.reviewers }}'
           'Spec: ${{ parameters.spec }}'  
+    
+    # fetch repo      
     - id: fetch-repo
       name: fetch repo
       action: fetch:plain
       input:
-        url: https://github.com/${{ parameters.org }}/${{ parameters.repoName }}
-    #- id: open-pr
-    #  name: Open pull request
-    #  action: publish:github:pull-request
-    #  input:
-    #    branchName: ${{ parameters.pr_branch }}
-    #    title: 'PR'
-    #    description: 'Pull request created by Backstage scaffolder'
-    #output:
-    #  links:
-    #  - title: PR Url
-    #    url: ${{ steps["open-pr"].output.remoteUrl }}
+        url: ${{ parameters.repoUrl }}
+
+    # add API
+    - id: apiSpecTemplate
+      name: Add API specification
+      action: fetch:template
+      input:
+        targetPath: openapi
+        url: ./skeleton
+        values:
+          spec: ${{ parameters.spec }}
+    
+    - id: renameSpectFile
+      name: rename spec
+      action: fs:rename
+      input:
+        files:
+        - from: openapi/spec.yaml
+          to: openapi/${{ parameters.name}}-oas.yaml
+          overwrite: true
+
+    # add API entity
+    - id: catalogTemplate
+      name: Generating the Catalog Info Component
+      action: fetch:template
+      input:
+        targetPath: openapi
+        url: ../../skeletons/catalog-info/
+        values:
+          entityKind: API
+          componentName: ${{ parameters.name }}
+          applicationType: openapi
+          description: ${{ parameters.description }}
+          lifecycle: experimental
+          owner: ${{ parameters.owner }}
+          definition: ${{ parameters.name}}-oas.yaml
+    
+    # rename catalog-info file
+    - id: renameCatalogInfo
+      name: rename catalog info
+      action: fs:rename
+      input:
+        files:
+        - from: openapi/catalog-info.yaml
+          to: openapi/${{ parameters.name }}-api.yaml
+    
+    # Open pull request
+    - id: open-pr
+      name: Open pull request
+      action: publish:github:pull-request
+      input:
+        repoUrl: ${{ parameters.repoUrl }}
+        branchName: ${{ parameters.pr_branch }}
+        title: 'Add ${{ parameters.name }}'
+        description: 'Pull request created by Backstage scaffolder'
+    
+    output:
+      links:
+      - title: PR Url
+        url: ${{ steps["open-pr"].output.remoteUrl }}

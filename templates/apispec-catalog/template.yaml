@@ -38,10 +38,9 @@ spec:
           title: Owner
           type: string
           description: API Owner
-          ui:field: EntityPicker
+          ui:field: OwnerPicker
           ui:options:
-            catalogFilter:
-              kind: [User, Group]
+            allowedKinds: [User, Group]
 
     - title: Provide information about Git Repo
       required:

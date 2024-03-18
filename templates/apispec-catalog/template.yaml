@@ -28,12 +28,18 @@ spec:
           title: Specification
           type: string
           description: API Specification
-          format: data-url
+          ui:widget: textarea
           ui:options:
-            accept:
-            - .yaml
-            - .yml
-            - .json
+            rows: 10
+          ui:help: 'Paste the contents of your OpenAPI sepecification'
+          ui:placeholder: |
+            ---  
+          #format: data-url
+          #ui:options:
+          #  accept:
+          #  - .yaml
+          #  - .yml
+          #  - .json
         owner:
           title: Owner
           type: string

@@ -145,7 +145,7 @@ spec:
       name: Open pull request
       action: publish:github:pull-request
       input:
-        repoUrl: https://github.com/${{ parameters.org }}/${{ parameters.repoName }}.git
+        repoUrl: github.com/${{ parameters.org }}/${{ parameters.repoName }}.git
         branchName: ${{ parameters.pr_branch }}
         title: 'Add ${{ parameters.name }} API'
         description: 'Pull request created by Backstage scaffolder'

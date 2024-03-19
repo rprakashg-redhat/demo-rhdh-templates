@@ -133,10 +133,11 @@ spec:
     - id: addTarget
       name: Add target 
       action: roadiehq:utils:merge
-      path: ./all-apis.yaml
-      content: >
-        - ./openapi/${{ parameters.name}}-api.yaml
-        
+      input:
+        path: ./all-apis.yaml
+        content: >
+          - ./openapi/${{ parameters.name}}-api.yaml
+
     # Open pull request
     - id: open-pr
       name: Open pull request

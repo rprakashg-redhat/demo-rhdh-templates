@@ -50,18 +50,19 @@ spec:
 
     - title: Provide information about Git Repo
       required:
-      - repoUrl
+      - org
+      - repoName
       - reviewers
       - pr_branch
       properties:
-        repoUrl:
-          title: Repository Url
+        org:
+          title: org
           type: string
-          description: Repository where the api specifications are stored
-          ui:field: RepoUrlPicker
-          ui:options:
-            allowedHosts:
-            - github.com
+          description: GitHub Org
+        repoName:
+          title: Repository Name
+          type: string
+          description: Repository name where API specifications are stored 
         reviewers:
           title: Reviewers
           type: array
@@ -84,7 +85,7 @@ spec:
       name: fetch repo
       action: fetch:plain
       input:
-        url: https://github.com/rprakashg-redhat/apis.git
+        url: https://github.com/${{ parameters.org }}/${{ parameters.repoName }}.git
         targetPath: ./
 
     # add API
@@ -133,9 +134,9 @@ spec:
 
     - id: addTarget
       name: Add target 
-      action: roadiehq:utils:merge
+      action: roadiehq:utils:fs:append
       input:
-        path: ./all-apis.yaml
+        path: all-apis.yaml
         content: >
           - ./openapi/${{ parameters.name}}-api.yaml
 
@@ -144,9 +145,9 @@ spec:
       name: Open pull request
       action: publish:github:pull-request
       input:
-        repoUrl: ${{ parameters.repoUrl }}
+        repoUrl: https://github.com/${{ parameters.org }}/${{ parameters.repoName }}.git
         branchName: ${{ parameters.pr_branch }}
-        title: 'Add ${{ parameters.name }}'
+        title: 'Add ${{ parameters.name }} API'
         description: 'Pull request created by Backstage scaffolder'
         reviewers: ${{ parameters.reviewers }}
     

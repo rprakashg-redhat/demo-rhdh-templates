@@ -134,7 +134,7 @@ spec:
       name: Add target 
       action: roadiehq:utils:merge
       input:
-        path: ./all-apis.yaml
+        path: ../all-apis.yaml
         content: >
           - ./openapi/${{ parameters.name}}-api.yaml
 

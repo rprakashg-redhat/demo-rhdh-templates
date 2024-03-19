@@ -130,6 +130,13 @@ spec:
         - from: openapi/catalog-info.yaml
           to: openapi/${{ parameters.name }}-api.yaml
     
+    - id: addTarget
+      name: Add target 
+      action: roadiehq:utils:merge
+      path: ./all-apis.yaml
+      content: >
+        - ./openapi/${{ parameters.name}}-api.yaml
+        
     # Open pull request
     - id: open-pr
       name: Open pull request
@@ -139,6 +146,7 @@ spec:
         branchName: ${{ parameters.pr_branch }}
         title: 'Add ${{ parameters.name }}'
         description: 'Pull request created by Backstage scaffolder'
+        reviewers: ${{ parameters.reviewers }}
     
     output:
       links:

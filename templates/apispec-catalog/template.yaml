@@ -85,13 +85,14 @@ spec:
       action: fetch:plain
       input:
         url: ${{ parameters.repoUrl }}
-
+        targetPath: ./apis
+    
     # add API
     - id: apiSpecTemplate
       name: Add API specification
       action: fetch:template
       input:
-        targetPath: openapi
+        targetPath: ./apis/openapi
         url: ./skeleton
         values:
           spec: ${{ parameters.spec }}
@@ -101,8 +102,8 @@ spec:
       action: fs:rename
       input:
         files:
-        - from: openapi/spec.yaml
-          to: openapi/${{ parameters.name}}-oas.yaml
+        - from: ./apis/openapi/spec.yaml
+          to: ./apis/openapi/${{ parameters.name}}-oas.yaml
           overwrite: true
 
     # add API entity
@@ -110,7 +111,7 @@ spec:
       name: Generating the Catalog Info Component
       action: fetch:template
       input:
-        targetPath: openapi
+        targetPath: ./apis/openapi
         url: ../../skeletons/catalog-info/
         values:
           entityKind: API
@@ -127,16 +128,16 @@ spec:
       action: fs:rename
       input:
         files:
-        - from: openapi/catalog-info.yaml
-          to: openapi/${{ parameters.name }}-api.yaml
+        - from: ./apis/openapi/catalog-info.yaml
+          to: ./apis/openapi/${{ parameters.name }}-api.yaml
     
-    - id: addTarget
-      name: Add target 
-      action: roadiehq:utils:merge
-      input:
-        path: ../all-apis.yaml
-        content: >
-          - ./openapi/${{ parameters.name}}-api.yaml
+    #- id: addTarget
+    #  name: Add target 
+    #  action: roadiehq:utils:merge
+    #  input:
+    #    path: ./all-apis.yaml
+    #    content: >
+    #      - ./openapi/${{ parameters.name}}-api.yaml
 
     # Open pull request
     - id: open-pr

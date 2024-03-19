@@ -85,7 +85,8 @@ spec:
       action: fetch:plain
       input:
         url: ${{ parameters.repoUrl }}
-    
+        targetPath: ./
+
     # add API
     - id: apiSpecTemplate
       name: Add API specification
@@ -129,12 +130,12 @@ spec:
         files:
         - from: openapi/catalog-info.yaml
           to: openapi/${{ parameters.name }}-api.yaml
-    
+
     - id: addTarget
       name: Add target 
       action: roadiehq:utils:merge
       input:
-        path: all-apis.yaml
+        path: ./all-apis.yaml
         content: >
           - ./openapi/${{ parameters.name}}-api.yaml
 

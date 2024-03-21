@@ -136,8 +136,8 @@ spec:
       action: roadiehq:utils:fs:append
       input:
         path: all-apis.yaml
-        content: >
-            - ./openapi/${{ parameters.name}}-api.yaml
+        content: |
+          - ./openapi/${{ parameters.name}}-api.yaml
 
     - id: parseYaml
       name: Parse Yaml

@@ -152,22 +152,16 @@ spec:
       input:
         data: ${{ steps['parseYaml'].output.content }}
     
-    - id: log
-      name: Console.log
-      action: debug:log
-      input:
-        message: |
-          Content: `${{ steps['serialize'].output.serialized }}`
     # Open pull request
-    #- id: open-pr
-    #  name: Open pull request
-    #  action: publish:github:pull-request
-    #  input:
-    #    repoUrl: ${{ parameters.repoUrl }}
-    #    branchName: ${{ parameters.pr_branch }}
-    #    title: 'Add ${{ parameters.name }} API'
-    #    description: 'Pull request created by Backstage scaffolder'
-    #    reviewers: ${{ parameters.reviewers }}
+    - id: open-pr
+      name: Open pull request
+      action: publish:github:pull-request
+      input:
+        repoUrl: ${{ parameters.repoUrl }}
+        branchName: ${{ parameters.pr_branch }}
+        title: 'Add ${{ parameters.name }} API'
+        description: 'Pull request created by Backstage scaffolder'
+        reviewers: ${{ parameters.reviewers }}
     
     output:
       links:

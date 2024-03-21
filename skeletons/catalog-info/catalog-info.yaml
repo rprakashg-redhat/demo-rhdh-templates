@@ -15,10 +15,12 @@ metadata:
   {%- if values.description %}
   description: ${{ values.description }}
   {%- endif %}
+  {%- if entityKind != API %}
   annotations:
     github.com/project-slug: ${{ values.orgName}}/${{values.repoName}}
     backstage.io/kubernetes-id: ${{ name }} 
-    backstage.io/techdocs-ref: dir:.  
+    backstage.io/techdocs-ref: dir:.
+  {%- endif %}
 spec:
   type: ${{ values.applicationType }}
   {%- if values.system %}
@@ -39,7 +41,7 @@ spec:
     - ${{ values.partOf }}
   {%- endif %}
   {%- if values.definition %}
-  definition: |
+  definition:
     $text: ./${{ values.definition }}
   {%- endif %}   
   {%- if values.providesApis %}

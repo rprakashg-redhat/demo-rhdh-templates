@@ -130,27 +130,6 @@ spec:
         files:
         - from: openapi/catalog-info.yaml
           to: openapi/${{ parameters.name }}-api.yaml
-
-    - id: addTarget
-      name: Add target 
-      action: roadiehq:utils:fs:append
-      input:
-        path: all-apis.yaml
-        content: >
-          - ./openapi/${{ parameters.name}}-api.yaml
-
-    - id: parseYaml
-      name: Parse Yaml
-      action: roadiehq:utils:fs:parse
-      input:
-        path: all-apis.yaml
-        parser: yaml
-
-    - id: serialize
-      name: Serialize yaml
-      action: roadiehq:utils:serialize:yaml
-      input:
-        data: ${{ steps['parseYaml'].output.content }}
     
     # Open pull request
     - id: open-pr

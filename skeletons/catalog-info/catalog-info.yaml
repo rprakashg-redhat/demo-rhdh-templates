@@ -15,7 +15,7 @@ metadata:
   {%- if values.description %}
   description: ${{ values.description }}
   {%- endif %}
-  {%- if entityKind != API %}
+  {%- if entityKind == Component %}
   annotations:
     github.com/project-slug: ${{ values.orgName}}/${{values.repoName}}
     backstage.io/kubernetes-id: ${{ name }} 

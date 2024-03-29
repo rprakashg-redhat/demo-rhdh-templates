@@ -7,3 +7,4 @@ spec:
   targets:
     - ./templates/go-rest-backend/template.yaml
     - ./templates/new-api-definition/template.yaml
+    - ./templates/test/template.yaml

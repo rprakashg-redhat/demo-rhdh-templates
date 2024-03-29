@@ -9,7 +9,7 @@ spec:
     type: service
 
     parameters:
-    - title: Provider information about stock
+    - title: Provider information about search users in OKTA
     required:
     - query
     - token

@@ -12,7 +12,7 @@ spec:
     - title: Provider information about search users in OKTA
     required:
     - query
-    - token
+    - apiToken
     - url
     properties:
         query:

@@ -10,11 +10,11 @@ spec:
 
     parameters:
     - title: Provider information about search users in OKTA
-    required:
-    - query
-    - apiToken
-    - url
-    properties:
+      required:
+        - query
+        - apiToken
+        - url
+      properties:
         query:
             title: Query
             type: string
@@ -42,4 +42,4 @@ spec:
             q: ${{ parameters.query }}
             limit: 25
     output:
-        results: '{{ steps["search_users"].output.body }}'
+      results: '{{ steps["search_users"].output.body }}'
